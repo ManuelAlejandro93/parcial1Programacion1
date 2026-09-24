@@ -5,9 +5,9 @@ public class Main {
         // Crear la empresa DevPlus con sus datos básicos
         DevPlus empresa = new DevPlus(
                 "DevPlus",
-                "1094938205",
-                "Barrio Los Quindos M15 Casa27",
-                "3143415131",
+                "123456789",
+                "Calle Principal 123, Bogotá",
+                "601-2345678",
                 "www.devplus.com");
 
         // Crear el gestor general que coordina todo el sistema
@@ -18,4 +18,3 @@ public class Main {
         menu.mostrarMenuPrincipal();
     }
 }
-//

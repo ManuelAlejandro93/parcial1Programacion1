@@ -68,14 +68,31 @@ public class Desarrollador {
 		this.estado = estado;
 	}
 
-	// Version simple: solo revisa el campo "estado"
+	// Valida si el desarrollador está disponible en un rango de fechas específico
+	// Verifica que el estado sea "Disponible" y que las fechas sean válidas
 	public boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaEntrega) {
-		return this.estado.equalsIgnoreCase("Disponible");
+		// Validación 1: Verificar que el estado sea "Disponible"
+		if (!this.estado.equalsIgnoreCase("Disponible")) {
+			return false;
+		}
+
+		// Validación 2: Verificar que las fechas no sean nulas
+		if (fechaInicio == null || fechaEntrega == null) {
+			return false;
+		}
+
+		// Validación 3: Verificar que la fecha de entrega sea posterior a la de inicio
+		if (fechaEntrega.isBefore(fechaInicio)) {
+			return false;
+		}
+
+		// Si pasa todas las validaciones, el desarrollador está disponible
+		return true;
 	}
 
 	@Override
 	public String toString() {
 		return "Cod: " + codigoDesarrollador + " | Equipo: " + equipoTrabajo + " | Nivel: " + nivel +
-				" | Tarifa/dia: " + tarifaPorDia + " | Estado: " + estado;
+				" | Tarifa/dia: $" + String.format("%.2f", tarifaPorDia) + " | Estado: " + estado;
 	}
 }

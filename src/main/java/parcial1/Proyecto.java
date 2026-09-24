@@ -3,32 +3,43 @@ package parcial1;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-// Proyecto contratado por un cliente
 public class Proyecto {
-	// Los desarrolladores se guardan en ARREGLOS de tamano fijo
 	public static final int MAX_DESARROLLADORES = 10;
-	// Los servicios se guardan en ARREGLOS de tamano fijo
 	public static final int MAX_SERVICIOS = 10;
 
 	private String codigoProyecto;
 	private LocalDate fechaSolicitud;
 	private LocalDate fechaInicio;
 	private LocalDate fechaEntrega;
-	private String estado; // Pendiente, Confirmado, En curso, Finalizado, Cancelado
-	private String metodoPago; // Tarjeta de credito, Transferencia bancaria, Efectivo
+	private String estado;
+	private String metodoPago;
 	private double valorTotal;
 	private Cliente cliente;
 
-	private Desarrollador[] desarrolladoresAsignados; // asigna una cantidad de desarrolladores y ayuda en la lógica
+	private Desarrollador[] desarrolladoresAsignados;
 	private ServicioAdicional[] serviciosUtilizados;
 
 	private int cantidadDesarrolladores;
-	private int cantidadServicios; // asigna una cantidad de servicios y ayuda en la lógica de asignación
+	private int cantidadServicios;
 
-	private double descuentoAplicado; // porcentaje, ej: 0.1 = 10%
+	private double descuentoAplicado;
 
 	public Proyecto(String codigoProyecto, LocalDate fechaSolicitud, LocalDate fechaInicio,
 			LocalDate fechaEntrega, String metodoPago, Cliente cliente) {
+
+		// Validaciones de fechas
+		if (fechaInicio == null || fechaEntrega == null || fechaSolicitud == null) {
+			throw new IllegalArgumentException("Las fechas no pueden ser nulas");
+		}
+
+		if (fechaInicio.isBefore(fechaSolicitud)) {
+			throw new IllegalArgumentException("La fecha de inicio no puede ser anterior a la fecha de solicitud");
+		}
+
+		if (fechaEntrega.isBefore(fechaInicio)) {
+			throw new IllegalArgumentException("La fecha de entrega no puede ser anterior a la fecha de inicio");
+		}
+
 		this.codigoProyecto = codigoProyecto;
 		this.fechaSolicitud = fechaSolicitud;
 		this.fechaInicio = fechaInicio;
@@ -155,6 +166,7 @@ public class Proyecto {
 	public String toString() {
 		return "Proyecto " + codigoProyecto + " | Estado: " + estado +
 				" | Cliente: " + (cliente != null ? cliente.getNombreLegal() : "N/A") +
-				" | Valor total: " + valorTotal;
+				" | Valor total: $" + String.format("%.2f", valorTotal) +
+				" | Fechas: " + fechaSolicitud + " -> " + fechaEntrega;
 	}
 }

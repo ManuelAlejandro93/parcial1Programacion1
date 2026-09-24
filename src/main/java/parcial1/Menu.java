@@ -7,6 +7,7 @@ import java.time.format.DateTimeParseException;
 
 public class Menu {
 	private GestorGeneral gestorGeneral;
+	private DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	public Menu(GestorGeneral gestorGeneral) {
 		this.gestorGeneral = gestorGeneral;
@@ -575,7 +576,6 @@ public class Menu {
 			return;
 
 		try {
-			DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate fSolicitud = LocalDate.parse(fechaSolicitud, formato);
 			LocalDate fInicio = LocalDate.parse(fechaInicio, formato);
 			LocalDate fEntrega = LocalDate.parse(fechaEntrega, formato);
@@ -590,6 +590,8 @@ public class Menu {
 			}
 		} catch (DateTimeParseException e) {
 			JOptionPane.showMessageDialog(null, "Error: Formato de fecha inválido. Use yyyy-MM-dd");
+		} catch (IllegalArgumentException e) {
+			JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
 		}
 	}
 
@@ -682,7 +684,7 @@ public class Menu {
 		}
 
 		double valorTotal = proyecto.calcularValorTotal();
-		JOptionPane.showMessageDialog(null, "Valor total del proyecto: $" + valorTotal);
+		JOptionPane.showMessageDialog(null, "Valor total del proyecto: $" + String.format("%.2f", valorTotal));
 	}
 
 	private void cambiarEstadoProyecto() {
@@ -735,11 +737,10 @@ public class Menu {
 			return;
 
 		try {
-			DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate fechaConsultada = LocalDate.parse(fecha, formato);
 			double ingresos = gestorGeneral.consultarIngresosPorFecha(fechaConsultada);
 
-			JOptionPane.showMessageDialog(null, "Ingresos en la fecha " + fecha + ": $" + ingresos);
+			JOptionPane.showMessageDialog(null, "Ingresos en la fecha " + fecha + ": $" + String.format("%.2f", ingresos));
 		} catch (DateTimeParseException e) {
 			JOptionPane.showMessageDialog(null, "Error: Formato de fecha inválido. Use yyyy-MM-dd");
 		}
