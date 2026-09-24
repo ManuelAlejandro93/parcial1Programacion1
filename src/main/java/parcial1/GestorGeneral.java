@@ -68,7 +68,6 @@ public class GestorGeneral {
 	}
 
 	// Extrae solo los dígitos de una cadena de teléfono
-	// Ejemplo: "+57-310-1234567" → "573101234567"
 	private String extraerDigitos(String telefono) {
 		// Validar que el teléfono no sea nulo
 		if (telefono == null || telefono.trim().isEmpty()) {
