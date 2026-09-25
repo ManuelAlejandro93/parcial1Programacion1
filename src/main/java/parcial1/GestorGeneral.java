@@ -49,21 +49,19 @@ public class GestorGeneral {
 	// Un número perfecto es igual a la suma de sus divisores propios
 	// Ejemplo: 6 = 1 + 2 + 3
 	public boolean esNumeroPerfecto(long numero) {
-		// Validar que el número sea positivo
 		if (numero <= 1) {
 			return false;
 		}
 
-		int sumaDivisores = 0;
+		long sumaDivisores = 0; // ✓ Cambio de int a long para evitar desbordamiento
 
-		// Encuentra los divisores propios (sin incluir el número mismo)
-		for (int i = 1; i < numero; i++) {
+		// ✓ Cambio de int a long en el bucle para evitar desbordamiento
+		for (long i = 1; i < numero; i++) {
 			if (numero % i == 0) {
 				sumaDivisores += i;
 			}
 		}
 
-		// Compara si la suma de divisores es igual al número
 		return sumaDivisores == numero;
 	}
 
